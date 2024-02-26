@@ -1,3 +1,6 @@
+import { messages } from './config'
+const { invalidIP, invalidMask, invalidIPorMask } = messages;
+
 export type CalculatorOption = {
   ip: string,
   mask: number | string,
@@ -72,8 +75,7 @@ export class Calculator {
    * @return {Calculator} the calculator instance with the IP address set
    */
   public setIp(ip: string): Calculator {
-    const message = 'Invalid IP address'
-    this.ipOctets = this.validateIp(ip, message)
+    this.ipOctets = this.validateIp(ip, invalidIP)
     // Builder pattern
     return this
   }
@@ -85,13 +87,12 @@ export class Calculator {
    * @return {Calculator} The updated Calculator object
    */
   public setMask(mask: number | string): Calculator {
-    const message = 'Invalid subnet mask'
     if (typeof mask === 'number') {
-      this.maskBits = this.validateMask(mask, message)
+      this.maskBits = this.validateMask(mask, invalidMask)
     } else {
-      const octets = this.validateIp(mask, message);
+      const octets = this.validateIp(mask, invalidMask);
       const newMask = this.getMaskBitsFromSubnetMask(octets);
-      this.maskBits = this.validateMask(newMask, message);
+      this.maskBits = this.validateMask(newMask, invalidMask);
     }
     // Builder pattern
     return this
@@ -105,11 +106,9 @@ export class Calculator {
    * @return {Calculator} the Calculator object with the calculated values set
    */
   public calculate(): Calculator {
-
-    const message = 'Invalid IP address or subnet mask'
     const ip = this.ipOctets
     const mask = this.maskBits
-    if (ip.length === 0 || mask === 0) { throw new Error(message) }
+    if (ip.length === 0 || mask === 0) { throw new Error(invalidIPorMask) }
 
     // Calculating the network mask
     const netmask = this.getNetworkMask(mask)
@@ -347,8 +346,7 @@ export class Calculator {
    * @return {string} the hexadecimal representation of the IP address
    */
   public convertToHexa(ip: string): string {
-    const message = 'Invalid IP address'
-    const ipParts: number[] = this.validateIp(ip, message)
+    const ipParts: number[] = this.validateIp(ip, invalidIP)
     return ipParts.map(part => part.toString(16).padStart(2, '0')).join('')
   }
 }
