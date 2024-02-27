@@ -8,8 +8,8 @@ export type CalculatorOptions = {
 
 
 export class Calculator {
-  private ipOctets: number[] = []
-  private maskBits: number = 0
+  private _ipOctets: number[] = []
+  private _maskBits: number = 0
 
   public ip: string = ''
   public network: string = ''
@@ -75,7 +75,7 @@ export class Calculator {
    * @return {Calculator} the calculator instance with the IP address set
    */
   public setIp(ip: string): Calculator {
-    this.ipOctets = this.validateIp(ip, invalidIP)
+    this._ipOctets = this.validateIp(ip, invalidIP)
     // Builder pattern
     return this
   }
@@ -98,7 +98,7 @@ export class Calculator {
       const octets = this.validateIp(mask, invalidMask);
       maskNum = this.getMaskBitsFromSubnetMask(octets);
     }
-    this.maskBits = this.validateMask(maskNum, invalidMask);
+    this._maskBits = this.validateMask(maskNum, invalidMask);
     return this
   }
 
@@ -110,8 +110,8 @@ export class Calculator {
    * @return {Calculator} the Calculator object with the calculated values set
    */
   public calculate(): Calculator {
-    const ip = this.ipOctets
-    const mask = this.maskBits
+    const ip = this._ipOctets
+    const mask = this._maskBits
     if (ip.length === 0 || mask === 0) { throw new Error(invalidIPorMask) }
 
     // Calculating the network mask
@@ -263,18 +263,18 @@ export class Calculator {
    * @return {number} the total number of mask bits
    */
   private getMaskBitsFromSubnetMask(netmask: number[]): number {
-    if (!this.maskBits) {
-      this.maskBits = 0
+    if (!this._maskBits) {
+      this._maskBits = 0
       for (let octet of netmask) {
         let bitCount = 0
         while (octet & 0x80) {
           bitCount++
           octet <<= 1
         }
-        this.maskBits += bitCount
+        this._maskBits += bitCount
       }
     }
-    return this.maskBits
+    return this._maskBits
   }
 
   /**
