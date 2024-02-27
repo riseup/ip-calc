@@ -86,10 +86,31 @@ The `calculate` method of the class does not take any parameters, it uses the ip
 
 All these methods are chainable, meaning that you can call multiple methods on the same instance of the class in a single statement, like this:
 ```typescript
-const calculator = new Calculator()
-  .setIp('10.0.0.1')
-  .setMask(24)
-  .calculate();
+import Calculator from './calculator';
+console.log(
+  Calculator()
+    .setIp('10.0.0.1')
+    .setMask(24)
+    .calculate()
+)
+
+
+// Logs the following:
+Calculator {
+  _ipOctets: [ 192, 168, 1, 1 ],
+  _maskBits: 24,
+  ip: '192.168.1.1',
+  network: '192.168.1.0',
+  netmask: '255.255.255.0',
+  broadcast: '192.168.1.255',
+  wildcard: '0.0.0.255',
+  hostMin: '192.168.1.1',
+  hostMax: '192.168.1.254',
+  ipv4Class: 'C',
+  maxHosts: '254',
+  maxNetworks: '16777216',
+  mask: '24'
+}
 ```
 This is known as the builder pattern.
 
@@ -110,4 +131,51 @@ calc.calculate();
 
 console.log(calc.convertToBinary(calc.ip)); // 11000000.10101000.00000001.00000001
 console.log(calc.convertToHexa(calc.ip)); // c0a80101
+```
+
+Using examples
+--------------
+You can choose the example you want to use by using the `--file` flag. For example, if you want to use the `cli-example1` example, you can run the following command:
+```bash
+npm run build
+
+npm run build:examples
+
+npm run example --file=cli-example1 --ip='192.168.1.1' --mask='24'
+```
+where `--file` is the name of the example you want to use, `--ip` is the IP address you want to use, and `--mask` is the subnet mask you want to use. Remember `--mask` could be in dot-decimal notation or number.
+
+The output will be:
+```bash
+IP: 192.168.1.1
+Network: 192.168.1.0
+Netmask: 255.255.255.0
+Broadcast: 192.168.1.255
+Wildcard: 0.0.0.255
+HostMin: 192.168.1.1
+HostMax: 192.168.1.254
+IPv4 Class: C
+Max Hosts: 254
+Max Networks: 16777216
+```
+
+```bash
+npm run example --file=cli-example2 --ip='10.0.0.129' --mask=16
+
+// Logs the following:
+Calculator {
+  _ipOctets: [ 10, 0, 0, 129 ],
+  _maskBits: 16,
+  ip: '10.0.0.129',
+  network: '10.0.0.0',
+  netmask: '255.255.0.0',
+  broadcast: '10.0.255.255',
+  wildcard: '0.0.255.255',
+  hostMin: '10.0.0.1',
+  hostMax: '10.0.255.254',
+  ipv4Class: 'A',
+  maxHosts: '65534',
+  maxNetworks: '65536',
+  mask: '16'
+}
 ```
