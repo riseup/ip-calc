@@ -1,7 +1,7 @@
 import { messages } from './config'
 const { invalidIP, invalidMask, invalidIPorMask } = messages;
 
-export type CalculatorOption = {
+export type CalculatorOptions = {
   ip: string,
   mask: number | string,
 }
@@ -26,12 +26,12 @@ export class Calculator {
   /**
    * Constructor for creating a new Calculator instance.
    *
-   * @param {CalculatorOption | undefined} options - options for the calculator
+   * @param {CalculatorOptions} options - options for the calculator
    * @return {void} 
    */
-  constructor(options: CalculatorOption | undefined) {
-    const ip: string = options?.ip ?? '';
-    const mask = options?.mask ?? 0;
+  constructor(options?: Partial<CalculatorOptions>) {
+    const ip: string = options?.ip ?? '127.0.0.1';
+    const mask = options?.mask ?? 32;
     this.setIp(ip);
     this.setMask(mask);
   }
@@ -87,14 +87,18 @@ export class Calculator {
    * @return {Calculator} The updated Calculator object
    */
   public setMask(mask: number | string): Calculator {
-    if (typeof mask === 'number') {
-      this.maskBits = this.validateMask(mask, invalidMask)
-    } else {
-      const octets = this.validateIp(mask, invalidMask);
-      const newMask = this.getMaskBitsFromSubnetMask(octets);
-      this.maskBits = this.validateMask(newMask, invalidMask);
+    let maskNum
+    if (typeof mask === 'number') { 
+      maskNum = mask 
     }
-    // Builder pattern
+    else if (/^\d+$/.test(mask)) { 
+      maskNum = parseInt(mask, 10) 
+    } 
+    else {
+      const octets = this.validateIp(mask, invalidMask);
+      maskNum = this.getMaskBitsFromSubnetMask(octets);
+    }
+    this.maskBits = this.validateMask(maskNum, invalidMask);
     return this
   }
 
@@ -233,8 +237,8 @@ export class Calculator {
    */
   private getHostMax(broadcast: number[]): number[] {
     const bcaConverted = this.convertToHexa(broadcast.join('.'))
-    const bcahostmax = this.subtractFromHex(bcaConverted)
-    return this.hexaToIpArray(bcahostmax)
+    const bcaHostMax = this.subtractFromHex(bcaConverted)
+    return this.hexaToIpArray(bcaHostMax)
   }
 
   /**
@@ -336,7 +340,8 @@ export class Calculator {
    * @return {string} the binary representation of the IP address
    */
   public convertToBinary(ip: string): string {
-    return ip.split('.').map((octet) => parseInt(octet).toString(2).padStart(8, '0')).join('.')
+    const ipParts: number[] = this.validateIp(ip, invalidIP)
+    return ipParts.map((octet) => octet.toString(2).padStart(8, '0')).join('.')
   }
 
   /**
