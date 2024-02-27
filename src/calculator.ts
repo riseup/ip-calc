@@ -99,6 +99,7 @@ export class Calculator {
       maskNum = this.getMaskBitsFromSubnetMask(octets);
     }
     this._maskBits = this.validateMask(maskNum, invalidMask);
+    // Builder pattern
     return this
   }
 
@@ -224,9 +225,9 @@ export class Calculator {
    * @return {number[]} the modified network address with the minimum host
    */
   private getHostMin(network: number[]): number[] {
-    const naa: number[] = Object.assign([], network)
-    naa[3] = naa[3] + 1
-    return naa
+    const na: number[] = Object.assign([], network)
+    na[3] = na[3] + 1
+    return na
   }
 
   /**
@@ -236,9 +237,9 @@ export class Calculator {
    * @return {number[]} an array containing the maximum host address
    */
   private getHostMax(broadcast: number[]): number[] {
-    const bcaConverted = this.convertToHexa(broadcast.join('.'))
-    const bcaHostMax = this.subtractFromHex(bcaConverted)
-    return this.hexaToIpArray(bcaHostMax)
+    const bca: number[] = Object.assign([], broadcast)
+    bca[3] = bca[3] - 1
+    return bca
   }
 
   /**
@@ -309,29 +310,6 @@ export class Calculator {
   private ipToOctetArray(ip: string): number[] {
     return ip.split(".").map(Number)
   }
-
-  /**
-   * Method to subtract 1 from a hexadecimal digit and return the result as a string.
-   *
-   * @param {string} hexDigit - The hexadecimal digit to subtract from.
-   * @return {string} The resulting hexadecimal digit as a string.
-   */
-  private subtractFromHex(hexDigit: string): string {
-    const numVal = parseInt(hexDigit, 16) - 1;
-    return (numVal < 0 ? 'ff' : numVal.toString(16).padStart(2, '0'));
-  }
-
-  /**
-   * Convert a hexadecimal string to an array of decimal numbers.
-   *
-   * @param {string} number - The hexadecimal string to be converted
-   * @return {number[]} An array of decimal numbers
-   */
-  private hexaToIpArray(number: string): number[] {
-    const hexaArray = number.match(/.{1,2}/g) || [];
-    return hexaArray.map((hex) => parseInt(hex, 16));
-  }
-
 
   /**
    * Converts the given IP address to binary representation.
