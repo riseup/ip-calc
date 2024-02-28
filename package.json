@@ -19,7 +19,7 @@
     "url": "git+https://github.com/riseup/ip-calc.git"
   },
   "author": "Sebastian Barroso <sebastianbarroso80@gmail.com> (https://github.com/riseup)",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "keywords": [
     "ip",
     "address",
