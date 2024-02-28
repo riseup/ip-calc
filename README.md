@@ -158,7 +158,7 @@ IPv4 Class: C
 Max Hosts: 254
 Max Networks: 16777216
 ```
-
+Or using the `cli-example2` example:
 ```bash
 npm run example --file=cli-example2 --ip='10.0.0.129' --mask=16
 
