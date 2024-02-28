@@ -30,8 +30,8 @@ export class Calculator {
    * @return {void} 
    */
   constructor(options?: Partial<CalculatorOptions>) {
-    const ip: string = options?.ip ?? '127.0.0.1';
-    const mask = options?.mask ?? 32;
+    const ip: string = options?.ip ?? '0.0.0.0';
+    const mask = options?.mask ?? 0;
     this.setIp(ip);
     this.setMask(mask);
   }
