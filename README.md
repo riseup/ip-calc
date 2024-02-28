@@ -188,7 +188,7 @@ Calculator {
 Test
 ----
 
-There are a test suite in `test/calculator.test.ts` to test the `constructor`, `setIp`, `setMask`, `calculate` methods. You can run it by executing the following command:
+There are a test suite in `test/calculator.test.ts` to test the `constructor`, `setIp`, `setMask`, `calculate`, `convertToHexa`, `convertToBinary` methods. You can run it by executing the following command:
 
 ```bash
 npm run pretest
