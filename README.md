@@ -1,3 +1,5 @@
+[![ci](https://github.com/riseup/ip-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/riseup/ip-calculator/actions/workflows/ci.yml)
+
 IP Calculator
 =============
 
