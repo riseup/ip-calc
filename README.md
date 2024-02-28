@@ -135,12 +135,15 @@ console.log(calc.convertToHexa(calc.ip)); // c0a80101
 
 Using examples
 --------------
-You can choose the example you want to use by using the `--file` flag. For example, if you want to use the `cli-example1` example, you can run the following command:
+
+First of all, you need to build the project. You can do that by running the following commands:
 ```bash
 npm run build
-
 npm run build:examples
+```
 
+You can choose the example you want to use by using the `--file` flag. For example, if you want to use the `cli-example1` example, you can run the following command:
+```bash
 npm run example --file=cli-example1 --ip='192.168.1.1' --mask='24'
 ```
 where `--file` is the name of the example you want to use, `--ip` is the IP address you want to use, and `--mask` is the subnet mask you want to use. Remember `--mask` could be in dot-decimal notation or number.
@@ -178,4 +181,14 @@ Calculator {
   maxNetworks: '65536',
   mask: '16'
 }
+```
+
+Test
+----
+
+There are a test suite in `test/calculator.test.ts` to test the `constructor`, `setIp`, `setMask`, `calculate` methods. You can run it by executing the following command:
+
+```bash
+npm run pretest
+npm run test
 ```
