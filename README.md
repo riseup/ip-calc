@@ -14,6 +14,11 @@ To use ip-calculator in your project, you need to install it through npm (Node P
 ```bash
 npm install ip-calculator
 ```
+or using yarn
+```bash
+yarn add ip-calculator
+```
+
 
 Usage
 -----
