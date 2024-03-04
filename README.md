@@ -8,6 +8,13 @@ Overview
 
 The IP Calculator is a powerful TypeScript library that simplifies the process of calculating various network details based on a given IP address and subnet mask. It offers a wide range of methods to set and validate the IP address and subnet mask, and calculate important network properties such as the network address, broadcast address, wildcard mask, first and last IP addresses, IPv4 class, number of hosts and networks, and the netmask in dot-decimal notation.
 
+Installation
+------------
+To use ip-calculator in your project, you need to install it through npm (Node Package Manager). Follow these steps:
+```bash
+npm install ip-calculator
+```
+
 Usage
 -----
 
